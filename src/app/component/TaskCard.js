@@ -1,31 +1,30 @@
 import { useRouter } from "next/navigation";
-import { useMaterial } from "../../context/TaskContext";
 
-export const MaterialCard = ({ material }) => {
+export const TaskCard = ({ task }) => {
   const router = useRouter();
-  const { deleteMat } = useMaterial();
+
   return (
     <div
       style={{ background: "#202020", color: "yellowgreen" }}
       onClick={() => {
-        router.push(`/api/edit/${material.id}`);
+        router.push(`/edit/${task.id}`);
       }}
     >
-      <h1>{material.title}</h1>
+      <h1>{task.title}</h1>
       <button
         onClick={(e) => {
           e.stopPropagation();
           const confirmDelete = window.confirm(
-            "¿Are you sure you want to delete this material?"
+            "¿Are you sure you want to delete this Task?"
           );
           if (confirmDelete) {
-            deleteMat(material.id);
+            deleteTask(task.id);
           }
         }}
       >
         Delete
       </button>
-      <p>{material.description}</p>
+      <p>{task.description}</p>
     </div>
   );
 };

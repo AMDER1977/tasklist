@@ -1,13 +1,14 @@
 "use client";
-import { MaterialCard } from "./component/MaterialCard";
-import { useMaterial } from "../context/TaskContext";
+import { useTasks } from "../context/TaskContext";
+import { TaskCard } from "./component/TaskCard";
 
 function HomePage() {
-  const { materiales } = useMaterial();
+  const { tasks } = useTasks();
+
   return (
     <div>
-      {materiales.map((material) => (
-        <MaterialCard key={material.id} material={material} />
+      {tasks.map((task) => (
+        <TaskCard key={task.id} task={task} />
       ))}
     </div>
   );
