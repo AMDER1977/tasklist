@@ -1,5 +1,5 @@
 //el layout viene siendo el root que engloba todas las paginas y rutas desde el front
-import { MaterialProvider } from "../context/MatContext"; //aca importamos desde el context el TaskProvider para que actue en todos los componentes
+import { TaskProvider } from "../context/TaskContext"; //aca importamos desde el context el TaskProvider para que actue en todos los componentes
 import "./globals.css";
 import { Navbar } from "./component/Navbar";
 
@@ -16,10 +16,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <MaterialProvider>
+        <TaskProvider>
           <Navbar />
           {children}
-        </MaterialProvider>
+        </TaskProvider>
       </body>
     </html>
   );
