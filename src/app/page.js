@@ -8,7 +8,7 @@ function HomePage() {
   return (
     <div>
       {tasks.map((task) => (
-        <TaskCard key={task.id} task={task} />
+        <TaskCard task={task} key={task.id} />
       ))}
     </div>
   );

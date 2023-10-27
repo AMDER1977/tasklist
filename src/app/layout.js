@@ -1,6 +1,7 @@
 //el layout viene siendo el root que engloba todas las paginas y rutas desde el front
 import { TaskProvider } from "../context/TaskContext"; //aca importamos desde el context el TaskProvider para que actue en todos los componentes
 import "./globals.css";
+import { Navbar } from "@/app/component/Navbar";
 
 //import { Inter } from "next/font/google";
 //const inter = Inter({ subsets: ["latin"] }); // *esto permite sacar los estilos de fuente  desde google
@@ -15,7 +16,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <TaskProvider>{children}</TaskProvider>
+        <TaskProvider>
+          <Navbar />
+          {children}
+        </TaskProvider>
       </body>
     </html>
   );
