@@ -1,8 +1,8 @@
 "use client";
 
-import { useTasks } from "../context/TasksContext";
+import { useTasks } from "@/context/TaskContext";
 import { VscTasklist } from "react-icons/vsc";
-import { TaskCard } from "../components/TaskCard";
+import { TaskCard } from "./component/TaskCard";
 
 function Home() {
   const { tasks } = useTasks();
