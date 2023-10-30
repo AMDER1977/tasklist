@@ -1,60 +1,40 @@
 "use client"; //**como los contextos pertenecen a React se utilizaria el use client
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
-export const TaskContext = createContext(); // se ejecuta y se crea un Provider
+const TaskContext = createContext();
+
 export const useTasks = () => {
   const context = useContext(TaskContext);
-  if (!context) throw new Error("useTasks must used within a Provider");
+  if (!context) throw new Error("useTasks must be used within a TasksProvider");
   return context;
 };
 
-export const TaskProvider = ({ children }) => {
-  const [tasks, setTask] = useState([
-    {
-      id: 1,
-      title: "my first tasks",
-      description: "some",
-    },
-    {
-      id: 2,
-      title: "second tasks",
-      description: "some2",
-    },
-    {
-      id: 1,
-      title: "third tasks",
-      description: "some3",
-    },
-    {
-      id: 1,
-      title: "four tasks",
-      description: "some4",
-    },
-  ]);
+export const TasksProvider = ({ children }) => {
+  // save in localStorage
+  const [tasks, setTasks] = useLocalStorage("tasks", []);
 
-  const createTask = (title, description) => {
-    setTask([
-      ...tasks,
-      {
-        title,
-        description,
-        id: uuid(),
-      },
+  const createTask = (title, description) =>
+    setTasks([...tasks, { id: uuid(), title, description }]);
+
+  const updateTask = (id, updatedTask) =>
+    setTasks([
+      ...tasks.map((task) =>
+        task.id === id ? { ...task, ...updatedTask } : task
+      ),
     ]);
-  };
-  const deleteTask = (id) => {
-    setTask([...tasks.filter((task) => task.id !== id)]);
-  };
-  const updateTask = (id) => {
-    setTask([...tasks.map(((task) => task.id === id) ? {} : task)]);
-  };
+
+  const deleteTask = (id) =>
+    setTasks([...tasks.filter((task) => task.id !== id)]);
+
   return (
     <TaskContext.Provider
       value={{
         tasks,
         createTask,
+        updateTask,
         deleteTask,
       }}
     >
