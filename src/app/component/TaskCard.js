@@ -1,7 +1,9 @@
 import { useRouter } from "next/navigation";
+import { useTasks } from "../../context/TaskContext";
 
 export const TaskCard = ({ task }) => {
   const router = useRouter();
+  const { deleteTask } = useTasks();
 
   return (
     <div

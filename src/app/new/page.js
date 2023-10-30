@@ -1,11 +1,14 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTasks } from "@/context/TaskContext";
 import { useRouter } from "next/navigation";
 
-function Page() {
-  const [task, setTask] = useState();
-  const { createTask } = useTasks();
+function Page({ params }) {
+  const [task, setTask] = useState({
+    title: "",
+    description: "",
+  });
+  const { tasks, createTask } = useTasks();
   const router = useRouter();
 
   const handleChange = (e) => {
@@ -14,17 +17,34 @@ function Page() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createTask(task.title, task.description);
+    if (params.id) {
+      console.log("editing");
+    } else {
+      createTask(task.title, task.description);
+    }
+
     router.push("/");
   };
+  useEffect(() => {
+    if (params.id) {
+      const taskId = tasks.find((task) => task.id === params.id);
+      if (taskId) setTask(taskId.title, taskId.description);
+    }
+  }, []);
 
   return (
     <form onSubmit={handleSubmit}>
-      <input name="title" placeholder="Write a title" onChange={handleChange} />
+      <input
+        name="title"
+        placeholder="Write a title"
+        onChange={handleChange}
+        value={task.title}
+      />
       <textarea
         name="description"
         placeholder="Add Description"
         onChange={handleChange}
+        value={task.description}
       />
       <button>Save</button>
     </form>

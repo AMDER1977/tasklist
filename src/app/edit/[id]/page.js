@@ -1,7 +1,3 @@
-import React from "react";
+import NewForm from "../../new/page";
 
-function Editpage({ params }) {
-  return <div>editando {params.id}</div>;
-}
-
-export default Editpage;
+export default NewForm;
